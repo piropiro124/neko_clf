@@ -15,15 +15,17 @@ def parse_args():
 
 
 def plot_for_metric(results, metrics, title="Results"):
+    formats = ["b", "ro"]
     fig = plt.figure()
     epochs = range(len(results))
-    for met in metrics:
+    for idx, met in enumerate(metrics):
         ave = []
         std = []
+        fmt = formats[idx % len(formats)]
         for e in epochs:
             ave.append(results[e][met]["ave"])
             std.append(results[e][met]["std"])
-        plt.errorbar(epochs, ave, yerr=std, fmt="bo", label=met)
+        plt.errorbar(epochs, ave, yerr=std, fmt=fmt, label=met, capsize=3)
     plt.title(title)
     plt.legend()
     return fig
@@ -48,5 +50,5 @@ def plot_results(results, save_to):
 if __name__ == "__main__":
     args = parse_args()
     if args.FILE is not None:
-        results = np.load(args.FILE, allow_picke=True)
+        results = np.load(args.FILE, allow_pickle=True)
         plot_results(results, args.save_to)

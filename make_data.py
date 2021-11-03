@@ -2,7 +2,7 @@ import argparse
 import glob
 
 import numpy as np
-from PIL import Image
+from tensorflow.keras.preprocessing import image
 
 
 def parse_args():
@@ -28,10 +28,12 @@ def list_files(dirs):
 
 def read_one_image(filename):
     # ファイルから画像を読み込む
-    img = Image.open(filename)
-    img = img.convert("RGB")
-    img = img.resize((150, 150))
-    return np.asfarray(img, dtype="float") / 255
+    print("reading {} ... ".format(filename), end="", flush=True)
+    img = image.load_img(filename)
+    img = image.smart_resize(img, (150, 150))
+    img_normalized = img / 255
+    print("done.")
+    return img_normalized
 
 
 def read_all_files(files):
@@ -52,7 +54,9 @@ def prepare_data(dirs):
 
 
 def save_data(inputs, targets, num_categories, filename):
+    print("saving to {} ... ".format(filename), end="", flush=True)
     np.save(filename, (inputs, targets, num_categories))
+    print("done.")
 
 
 if __name__ == "__main__":
