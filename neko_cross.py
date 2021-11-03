@@ -119,14 +119,14 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     inputs, targets, num_categories = read_data(args.data_file[0])
-    train_stat_records, result_stats = train(inputs,
-                                             targets,
-                                             num_categories,
-                                             args.epochs,
-                                             args.batch_size,
-                                             args.num_folds)
+    train_stat_records = train(inputs,
+                               targets,
+                               num_categories,
+                               args.epochs,
+                               args.batch_size,
+                               args.num_folds)
     if args.results is not None:
-        np.save(args.results, (train_stat_records, result_stats))
+        np.save(args.results, train_stat_records)
     else:
         for idx, epoch_stat in enumerate(train_stat_records):
             msg = "{}".format(idx)
