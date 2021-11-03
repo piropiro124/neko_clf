@@ -51,14 +51,15 @@ def prepare_data(dirs):
     return read_all_files(file_list)
 
 
-def save_data(inputs, targets, filename):
-    np.save(filename, (inputs, targets))
+def save_data(inputs, targets, num_categories, filename):
+    np.save(filename, (inputs, targets, num_categories))
 
 
 if __name__ == "__main__":
     args = parse_args()
+    num_categories = len(args.DIRS)
     inputs, targets = prepare_data(args.DIRS)
     if args.save_to is not None:
-        save_data(inputs, targets, args.save_to)
+        save_data(inputs, targets, num_categories, args.save_to)
     else:
         print("# of images: {}".format(len(inputs)))
