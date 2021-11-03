@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "neko_clf"
+version = "0.1.0"
+description = ""
+authors = ["hjmr <2620990+hjmr@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.10"
+scipy = "^1.7.1"
+scikit-learn = "^1.0.1"
+Cython = "^0.29.24"
+numpy = "1.19.5"
+h5py = {path = "../../packages/dist/h5py-3.1.0-cp39-cp39-macosx_12_0_arm64.whl"}
+tensorflow-macos = "^2.6.0"
+tensorflow-metal = "^0.2.0"
+matplotlib = "^3.4.3"
+
+[tool.poetry.dev-dependencies]
+autopep8 = "^1.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
