@@ -12,6 +12,9 @@ from tensorflow.keras.utils import to_categorical
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
+# 入力データの形状：画像の場合は画像サイズとチャネル数
+INPUT_SHAPE = (150, 150, 3)
+
 
 def read_data(data_file):
     return np.load(data_file, allow_pickle=True)
@@ -20,7 +23,7 @@ def read_data(data_file):
 def build_model(num_categories):
     model = Sequential()
     model.add(Conv2D(32, (3, 3), activation="relu",
-              input_shape=(150, 150, 3)))
+              input_shape=INPUT_SHAPE))
     model.add(MaxPooling2D((2, 2)))
     model.add(Conv2D(64, (3, 3), activation="relu"))
     model.add(MaxPooling2D((2, 2)))

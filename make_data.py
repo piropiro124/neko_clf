@@ -4,6 +4,8 @@ import glob
 import numpy as np
 from tensorflow.keras.preprocessing import image
 
+IMG_SIZE = (150, 150)
+
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -30,7 +32,7 @@ def read_one_image(filename):
     # ファイルから画像を読み込む
     print("reading {} ... ".format(filename), end="", flush=True)
     img = image.load_img(filename)
-    img = image.smart_resize(img, (150, 150))
+    img = image.smart_resize(img, IMG_SIZE)
     img_normalized = img / 255
     print("done.")
     return img_normalized
