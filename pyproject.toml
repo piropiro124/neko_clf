@@ -8,10 +8,10 @@ authors = ["hjmr <2620990+hjmr@users.noreply.github.com>"]
 python = ">=3.9,<3.10"
 numpy = "1.19.5"
 matplotlib = "^3.4.3"
-h5py = {path = "../../packages/dist/h5py-3.1.0-cp39-cp39-macosx_11_0_arm64.whl"}
+h5py = {url = "https://github.com/hjmr/apple-silicon-wheels/raw/main/h5py-3.1.0-cp39-cp39-macosx_11_0_arm64.whl"}
 tensorflow-macos = "^2.6.0"
 tensorflow-metal = "^0.2.0"
-scipy = {path = "../../packages/dist/scipy-1.7.1-cp39-cp39-macosx_11_0_arm64.whl"}
+scipy = {url = "https://github.com/hjmr/apple-silicon-wheels/raw/main/scipy-1.7.1-cp39-cp39-macosx_11_0_arm64.whl"}
 scikit-learn = "^1.0.1"
 keras = "2.6.0"
 
