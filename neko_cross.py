@@ -43,6 +43,7 @@ def build_model(num_categories):
 
 
 def init_train_records(rec):
+    # 学習経過記録用の配列を作成する
     records = []
     epochs = list(rec.history.values())[0]
     for _ in epochs:
@@ -54,9 +55,22 @@ def init_train_records(rec):
 
 
 def store_train_record(records, rec):
+    # foldごとの学習経過を記録する
     for k in rec.history.keys():
         for e, v in enumerate(rec.history[k]):
             records[e][k].append(v)
+
+
+def calc_train_record_stats(records):
+    # foldごとの学習経過記録の平均と標準偏差を計算
+    train_stat_records = []
+    for epoch_record in records:
+        epoch_stats = {}
+        for k in epoch_record.keys():
+            epoch_stats[k] = {"ave": np.mean(epoch_record[k]),
+                              "std": np.std(epoch_record[k])}
+        train_stat_records.append(epoch_stats)
+    return train_stat_records
 
 
 def train(inputs, targets, num_categories, num_epochs, batch_size, num_folds=5, verbose=1):
@@ -80,7 +94,7 @@ def train(inputs, targets, num_categories, num_epochs, batch_size, num_folds=5, 
                            epochs=num_epochs, batch_size=batch_size,
                            validation_data=(inputs[test], targets[test]),
                            verbose=(1 < verbose))
-        if train_records is None:
+        if train_records is None:  # 初回に学習経過記録用の配列を作成
             train_records = init_train_records(record)
         store_train_record(train_records, record)
 
@@ -95,13 +109,7 @@ def train(inputs, targets, num_categories, num_epochs, batch_size, num_folds=5, 
         fold_no = fold_no + 1
 
     # foldごとの平均と標準偏差を計算
-    train_stat_records = []
-    for epoch_record in train_records:
-        epoch_stats = {}
-        for k in epoch_record.keys():
-            epoch_stats[k] = {"ave": np.mean(epoch_record[k]),
-                              "std": np.std(epoch_record[k])}
-        train_stat_records.append(epoch_stats)
+    train_stat_records = calc_train_record_stats(train_records)
 
     return train_stat_records
 
@@ -136,6 +144,7 @@ if __name__ == "__main__":
     if args.results is not None:
         np.save(args.results, train_stat_records)
     else:
+        # 学習経過の記録用ファイルが指定されていなければ画面に表示
         for epoch, epoch_stat in enumerate(train_stat_records):
             msg = "{}".format(epoch + 1)
             for metric in train_stat_records[0].keys():
