@@ -41,7 +41,7 @@ def plot_results(results, save_to):
         fig = plot_for_metric(results, metrics, title)
         if save_to is not None:
             basename, ext = os.path.splitext(save_to)
-            fig.savefig("{}_acc{}".format(basename, ext))
+            fig.savefig("{}_{}{}".format(basename, metrics[0], ext))
         else:
             fig.show()
             input("Press Enter to proceed.")
